@@ -70,6 +70,96 @@
     </nav>
 
     <!-- 分頁 1 內容 -->
+
+    <!-- 隱藏分頁：工作坊流程（不在導覽列，從頁尾「流程」或網址 #flow 進入） -->
+    <div id="tabk" class="tab-content hidden fade-in space-y-8">
+      <div class="bg-slate-800 text-white rounded-2xl shadow-sm p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-4 justify-between">
+        <div class="min-w-0">
+          <p class="text-xs tracking-widest text-slate-400 mb-1">講師用・工作坊流程</p>
+          <h2 class="text-xl md:text-2xl font-bold leading-snug" style="text-wrap:balance">「兩題手寫題部署＋API Key 批改」工作坊進行流程</h2>
+        </div>
+        <button onclick="switchTab('tabw', document.querySelector('.tab-btn'))" class="self-start md:self-center shrink-0 text-sm bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-4 py-2 transition">← 回到教學網</button>
+      </div>
+
+      <section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-sky-50 border-b border-sky-100 px-6 py-4 flex items-center gap-3">
+          <span class="bg-sky-600 text-white font-bold w-9 h-9 rounded-full flex items-center justify-center shrink-0">一</span>
+          <h2 class="text-lg md:text-xl font-bold text-slate-800">講師介紹如何進入「前台網頁」</h2>
+        </div>
+        <div class="p-6 md:p-8 space-y-5">
+          <p class="text-slate-700 leading-relaxed">從網頁連外網，點下方按鈕開啟學生作答用的前台。</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="https://meee.ing/87d1ac" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 border border-sky-200 bg-sky-50 hover:bg-sky-100 rounded-xl px-4 py-3 transition hover:-translate-y-0.5">
+                <span class="text-2xl">🖥️</span>
+                <span class="flex flex-col min-w-0"><span class="font-bold text-slate-800">開啟前台網頁 <span class="text-sky-600">↗</span></span><span class="text-xs text-slate-500 truncate">meee.ing/87d1ac</span></span>
+              </a>
+          </div>
+        </div>
+      </section>
+      <section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-emerald-50 border-b border-emerald-100 px-6 py-4 flex items-center gap-3">
+          <span class="bg-emerald-600 text-white font-bold w-9 h-9 rounded-full flex items-center justify-center shrink-0">二</span>
+          <h2 class="text-lg md:text-xl font-bold text-slate-800">學員模仿學生：進入「前台」操作介面</h2>
+        </div>
+        <div class="p-6 md:p-8 space-y-5">
+          <ol class="space-y-4">
+            <li class="flex gap-4"><span class="bg-emerald-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">①</span><div class="min-w-0"><p class="font-bold text-slate-800">開始作答</p><p class="text-sm text-slate-600 leading-relaxed mt-1">選擇<span class="bg-emerald-100 px-1 rounded">單元</span>，輸入<span class="bg-emerald-100 px-1 rounded">座號</span>、<span class="bg-emerald-100 px-1 rounded">姓名</span>，再按「開始作答」。</p></div></li>
+            <li class="flex gap-4"><span class="bg-emerald-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">②</span><div class="min-w-0"><p class="font-bold text-slate-800">查詢成績與回饋</p><p class="text-sm text-slate-600 leading-relaxed mt-1">完成作答後，用和 ① <strong>相同的單元、座號、姓名</strong>進入「查詢成績與回饋」查看。</p></div></li>
+          </ol>
+          <p class="text-sm bg-amber-50 border border-amber-200 text-amber-900 rounded-lg px-4 py-2">請記住自己輸入的座號和姓名，後面查看 AI 批改結果時要用同一組。</p>
+        </div>
+      </section>
+      <section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-amber-50 border-b border-amber-100 px-6 py-4 flex items-center gap-3">
+          <span class="bg-amber-600 text-white font-bold w-9 h-9 rounded-full flex items-center justify-center shrink-0">三</span>
+          <h2 class="text-lg md:text-xl font-bold text-slate-800">講師展示「後台」</h2>
+        </div>
+        <div class="p-6 md:p-8 space-y-5">
+          <p class="text-slate-700 leading-relaxed">從網頁連外網，打開後台的雲端資料夾與試算表。</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="https://drive.google.com/drive/folders/1WrTu4CePYvEBpZlq695g0YxRRDE49Id6?usp=drive_link" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 border border-amber-200 bg-amber-50 hover:bg-amber-100 rounded-xl px-4 py-3 transition hover:-translate-y-0.5">
+                <span class="text-2xl">📁</span>
+                <span class="flex flex-col min-w-0"><span class="font-bold text-slate-800">後台（folder） <span class="text-amber-600">↗</span></span><span class="text-xs text-slate-500 truncate">Google 雲端硬碟資料夾</span></span>
+              </a>
+              <a href="https://docs.google.com/spreadsheets/d/1Kgi-ooCkWIwYHhbJkevFINH5Re4boA-rUkROjHu3D6A/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 border border-green-200 bg-green-50 hover:bg-green-100 rounded-xl px-4 py-3 transition hover:-translate-y-0.5">
+                <span class="text-2xl">📊</span>
+                <span class="flex flex-col min-w-0"><span class="font-bold text-slate-800">後台（sheet） <span class="text-green-600">↗</span></span><span class="text-xs text-slate-500 truncate">Google 試算表</span></span>
+              </a>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-slate-700 mb-2">試算表上方的「🤖 AI 批改」選單：</p>
+            <div class="bg-white border border-slate-200 rounded-xl shadow-md max-w-md overflow-hidden" aria-label="試算表選單示意">
+              <div class="bg-slate-100 px-4 py-2 font-bold text-slate-700 border-b border-slate-200">🤖 AI 批改</div>
+              <ul class="p-2 text-sm space-y-0.5">
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>⓪ 檢查試算表與資料夾 ID</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 bg-amber-100 ring-2 ring-amber-400 font-bold text-slate-900"><span>① 設定 Gemini API Key</span><span class="ml-auto shrink-0 text-xs font-bold bg-amber-500 text-white rounded-full px-2 py-0.5">步驟 1</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>② 建立 / 檢查設定分頁與題庫</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>③ 測試連線並列出可用模型</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>④ 檢查題庫（題目圖片讀得到嗎？）</span></li>
+                <li class="border-t border-slate-200 my-1"></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 bg-amber-100 ring-2 ring-amber-400 font-bold text-slate-900"><span>🎬 示範用：立刻批改最新一份作答</span><span class="ml-auto shrink-0 text-xs font-bold bg-amber-500 text-white rounded-full px-2 py-0.5">步驟 2</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>▶️ 批改目前分頁的「待批改」作答</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>🔁 重新批改我選取的列</span></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>📢 公開「待老師確認」的批改結果</span></li>
+                <li class="border-t border-slate-200 my-1"></li>
+                <li class="flex items-center gap-2 rounded-md px-3 py-2 text-slate-700"><span>■ 停止自動接續批改</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-violet-50 border-b border-violet-100 px-6 py-4 flex items-center gap-3">
+          <span class="bg-violet-600 text-white font-bold w-9 h-9 rounded-full flex items-center justify-center shrink-0">四</span>
+          <h2 class="text-lg md:text-xl font-bold text-slate-800">講師展示 AI 批改的步驟</h2>
+        </div>
+        <div class="p-6 md:p-8 space-y-5">
+          <ol class="space-y-5"><li class="flex gap-4"><span class="bg-violet-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">1</span><div class="min-w-0"><p class="font-bold text-slate-800">設定 Gemini API Key</p><p class="text-sm text-slate-600 leading-relaxed mt-1">部署完成後回到試算表，點上方選單「🤖 AI 批改」→「① 設定 Gemini API Key」。</p></div></li><li class="flex gap-4"><span class="bg-violet-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">2</span><div class="min-w-0"><p class="font-bold text-slate-800">立刻批改最新一份作答</p><p class="text-sm text-slate-600 leading-relaxed mt-1">再點開選單，在「④ 檢查題庫」下面的分隔線之後，點「🎬 示範用：立刻批改最新一份作答」。</p></div></li><li class="flex gap-4"><span class="bg-violet-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">3</span><div class="min-w-0"><p class="font-bold text-slate-800">看 AI 即時批改</p><p class="text-sm text-slate-600 leading-relaxed mt-1">切到剛剛模擬學生作答的那一個分頁，就會看到 AI 批改的即時畫面。</p></div></li><li class="flex gap-4"><span class="bg-violet-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">4</span><div class="min-w-0"><p class="font-bold text-slate-800">回前台查看結果</p><p class="text-sm text-slate-600 leading-relaxed mt-1">再扮演學生，用<strong>同一組座號、姓名</strong>回到前台，點「查詢成績與回饋」看批改結果。</p></div></li>
+          </ol>
+        </div>
+      </section>
+    </div>
+
     <!-- 暖身分頁 -->
     <div id="tabw" class="tab-content fade-in space-y-8">
       <div class="bg-white rounded-2xl shadow-sm p-6 md:p-8 border-l-4 border-rose-500">
@@ -2140,6 +2230,8 @@ function getFeedback(payload) {
         <span aria-hidden="true" class="opacity-50">·</span>
         <a href="https://drive.google.com/drive/folders/1O3I7_zI1wqDEfeZWrTI_zA8OrqCUqgdE" target="_blank" rel="noopener noreferrer" class="opacity-70 hover:opacity-100 hover:text-slate-600 hover:underline underline-offset-4 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-400 rounded px-1 transition">教師資源</a>
       </nav>
+      <!-- 低調連結：工作坊流程（隱藏分頁） -->
+      <button type="button" onclick="openFlow()" class="text-xs text-slate-400 opacity-40 hover:opacity-100 hover:text-slate-600 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-400 rounded px-1 transition">流程</button>
       <!-- 低調連結：安親班前台、後台 -->
       <nav aria-label="安親班範例" class="flex items-center gap-2 text-xs text-slate-400">
         <span class="opacity-60">安親班</span>
@@ -2199,6 +2291,13 @@ function getFeedback(payload) {
     }
 
     // 切換分頁邏輯
+    // 隱藏分頁：工作坊流程
+    function openFlow() {
+      switchTab('tabk', null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (location.hash === '#flow') document.addEventListener('DOMContentLoaded', openFlow);
+
     function switchTab(tabId, btnElement) {
       // 隱藏所有內容
       document.querySelectorAll('.tab-content').forEach(el => {
@@ -2213,6 +2312,7 @@ function getFeedback(payload) {
       document.getElementById(tabId).classList.remove('hidden');
       
       // 設定當前按鈕的 active 狀態 (根據不同顏色給予不同的 ring color)
+      if(!btnElement) return;
       btnElement.classList.add('active', 'ring-4', 'ring-offset-2');
       if(tabId === 'tabw') btnElement.classList.add('ring-rose-300');
       if(tabId === 'tab0') btnElement.classList.add('ring-amber-300');
