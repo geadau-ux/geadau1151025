@@ -1,4 +1,4 @@
-<title>數位手寫畫布教學</title>
+<title>AI 神批改畫布</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
@@ -41,6 +41,7 @@
   .custom-word.active { background-color: var(--custom-on); box-shadow: 0 0 0 2px var(--custom), 0 0 0 4px var(--custom-ink); }
   .legend-chip { padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-weight: 600; }
 
+  [hidden], #lightbox[hidden] { display: none !important; }
   .expl-card { display: none; }
   .expl-card.active { display: block; animation: fadeIn 0.3s ease forwards; }
 
@@ -66,35 +67,13 @@
         </span>
       </div>
       <div class="text-center md:text-left">
-        <h1 class="text-3xl font-black text-slate-800 tracking-tight">🚀 GAS 實戰部署教學網</h1>
-        <p class="text-slate-500 mt-2">從基礎到進階，一次學會 Google Apps Script 網頁應用程式</p>
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">✍️ AI 神批改：數位手寫畫布實戰</h1>
+        <p class="text-slate-500 mt-2">學生手寫作答、Gemini 依規準批改，一份 Prompt 搭好你的 GAS 智慧批改系統</p>
       </div>
     </div>
   </header>
 
   <main class="max-w-6xl w-full mx-auto page-gutter flex-grow mb-12">
-
-    <!-- 分頁導覽列 -->
-    <nav class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8" aria-label="教學分頁">
-      <a href="https://geadau-ux.github.io/cdr1025/gas" class="tab-btn bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2">
-        <span class="text-2xl">💬</span><span class="text-lg">暖身：AI 事件討論</span>
-      </a>
-      <a href="https://geadau-ux.github.io/cdr1025/gas" class="tab-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2">
-        <span class="text-2xl">🧰</span><span class="text-lg">0. 環境準備</span>
-      </a>
-      <a href="https://geadau-ux.github.io/cdr1025/gas" class="tab-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2">
-        <span class="text-2xl">📝</span><span class="text-lg">1. 證書自動產製</span>
-      </a>
-      <a href="https://geadau-ux.github.io/cdr1025/gas" class="tab-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2">
-        <span class="text-2xl">🖋️</span><span class="text-lg">2. 簽名與檔上傳</span>
-      </a>
-      <a href="https://geadau-ux.github.io/cdr1025/gas" class="tab-btn bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2">
-        <span class="text-2xl">📊</span><span class="text-lg">3. 雲端即時看板</span>
-      </a>
-      <span aria-current="page" class="tab-btn bg-indigo-500 text-white font-bold py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2 ring-4 ring-offset-2 ring-indigo-300">
-        <span class="text-2xl">✍️</span><span class="text-lg">4. AI 手寫批改畫布</span>
-      </span>
-    </nav>
 
     <!-- 分頁 4 內容 -->
     <div id="tab4" class="tab-content fade-in space-y-8">
