@@ -92,7 +92,7 @@
           </div>
         </div>
         <p class="text-lg leading-relaxed text-slate-700">
-          「數位手寫與文字探索畫布 3.5」由 <strong>Code.gs（後端）</strong>與 <strong>Index.html（前端）</strong>組成。學生可以在畫布上手寫、打字、貼上照片並畫圈註記，送出後合成一張圖；老師在 Google 試算表的「🤖 AI 批改」選單中，就能讓 Gemini 依題目與詳解產生評量規準，再逐份辨識作答圖並填回分數與回饋。<br><br>
+          「數位手寫與文字探索畫布 3.5」由 <strong>Code.gs（後端）</strong>與 <strong>Index.html（前端）</strong>組成。學生可以在畫布上手寫、打字、貼上照片並畫圈註記，送出後合成一張圖；老師在 Google 試算表的「🤖 AI 批改」選單中，就能讓 Gemini 依題目與詳解產生評量規準，再逐份辨識作答圖並填回分數與回饋。批改完成後，學生切到「🔍 查詢成績與詳解」，輸入班級、座號、姓名就能看到自己的分數、AI 回饋與詳解。<br><br>
           這份 Prompt 一次就要 AI 寫出完整系統，所以每個關鍵字都有它的作用。<strong class="text-indigo-600">黃色的字是觸發技術功能的關鍵，建議保留；綠色的字可以依您的科目和需求改寫。</strong>
         </p>
       </div>
@@ -145,6 +145,7 @@
                       <li>- 需實作 3.5 分鐘超時中斷與 <span class="interactive-word tech-word" data-target="expl-trigger">Time-driven trigger</span> 自動接續批改功能。</li>
                     </ul>
                   </li>
+                  <li>6. 🔍 學生查詢成績：提供 <span class="interactive-word tech-word" data-target="expl-query">getMyResult()</span>，依班級、座號、姓名與單元找出該生最新一份作答，回傳總分、各題得分、AI 回饋與詳解；並在系統設定加入<span class="interactive-word custom-word" data-target="expl-queryset">「開放成績查詢」與「查詢時顯示詳解」</span>兩個勾選開關。</li>
                 </ul>
 
                 <h3 class="text-indigo-300 font-bold mb-2" style="font-family:var(--font-body)">【模組二：前端 Index.html 學生畫布功能】</h3>
@@ -160,6 +161,7 @@
                     </ul>
                   </li>
                   <li>4. 送出作業：將兩題 Canvas 垂直拼接成一張圖，轉為 Base64 傳給後端。</li>
+                  <li>5. 頁首提供「📝 開始作答」與「🔍 查詢成績與詳解」兩個分頁；查詢頁顯示總分圓環、各題得分、AI 回饋與詳解，尚未批改時顯示「⏳批改中」。</li>
                 </ul>
 
                 <h3 class="text-rose-300 font-bold mb-2" style="font-family:var(--font-body)">【模組三：技術地雷與防呆（嚴格遵守）】</h3>
@@ -300,6 +302,30 @@
                   </ol>
                 </div>
 
+                <div id="expl-query" class="expl-card bg-white p-5 rounded-xl border-l-4 border-yellow-400 shadow-sm">
+                  <h4 class="font-bold text-yellow-800 mb-3 text-lg border-b border-yellow-100 pb-2">⚙️ 技術解析：getMyResult() 查詢成績</h4>
+                  <p class="text-slate-700 leading-relaxed text-sm mb-3">AI 批改的結果只寫在老師的試算表裡，學生端原本看不到。指定一個查詢函式，AI 才會寫出「從📥作答紀錄由下往上找，找到這位學生最新一份作答」的邏輯。</p>
+                  <ul class="list-disc pl-5 text-sm space-y-2 text-slate-600">
+                    <li>比對時會去掉空白、全形轉半形，座號 <code>05</code> 和 <code>5</code> 視為同一人，學生不會因為打法不同而查不到。</li>
+                    <li>回傳給前端前，日期會先轉成文字。<code>google.script.run</code> 不能直接回傳日期物件，否則前端會收到空值。</li>
+                  </ul>
+                </div>
+
+                <div id="expl-queryset" class="expl-card bg-white p-5 rounded-xl border-l-4 border-green-400 shadow-sm">
+                  <h4 class="font-bold text-green-800 mb-3 text-lg border-b border-green-100 pb-2">💡 修改靈感：查詢開關與開放時機</h4>
+                  <p class="text-slate-700 leading-relaxed text-sm mb-4">把開關放在試算表，老師就能自己決定學生什麼時候看得到成績與詳解，不用改程式。</p>
+                  <div class="bg-slate-100 p-4 rounded-lg space-y-3">
+                    <div>
+                      <span class="text-xs font-bold text-slate-500">想等全班考完才公布詳解：</span>
+                      <code class="block text-sm text-green-700 mt-1">「...加入『詳解開放時間』欄位，時間到了才在查詢結果顯示詳解...」</code>
+                    </div>
+                    <div>
+                      <span class="text-xs font-bold text-slate-500">想加一道身分驗證：</span>
+                      <code class="block text-sm text-green-700 mt-1">「...學生查詢時需輸入老師發的四位數查詢碼，比對試算表『學生名單』分頁...」</code>
+                    </div>
+                  </div>
+                </div>
+
                 <div id="expl-regex" class="expl-card bg-white p-5 rounded-xl border-l-4 border-rose-400 shadow-sm">
                   <h4 class="font-bold text-rose-800 mb-3 text-lg border-b border-rose-100 pb-2">💣 技術防呆：\x60 跳脫字元</h4>
                   <p class="text-slate-700 leading-relaxed text-sm mb-3">這就是我們用來解決「程式碼被切斷（Unexpected end of input）」的終極武器。</p>
@@ -423,7 +449,9 @@ const SETTINGS_ROWS = [
   ['規準生成溫度', 0.4, '0～1'],
   ['信心度門檻', 0.6, 'AI 信心度低於此值時標記「需人工複核」'],
   ['最大重試次數', 2, '單份作答批改失敗時自動重試的次數'],
-  ['送出後自動批改', false, '勾選＝學生送出後約 1 分鐘自動啟動批改']
+  ['送出後自動批改', false, '勾選＝學生送出後約 1 分鐘自動啟動批改'],
+  ['開放成績查詢', true, '勾選＝學生可在「🔍 查詢成績與詳解」用班級、座號、姓名查詢自己的批改結果'],
+  ['查詢時顯示詳解', true, '勾選＝查詢成績時一併顯示各題詳解；取消勾選＝只顯示分數與 AI 回饋']
 ];
 
 const DEMO_QUESTIONS = [
@@ -507,7 +535,11 @@ function getInitData() {
     });
   return {
     mode: 'live',
-    settings: { title: str_(s['系統名稱']) || (APP.NAME + ' ' + APP.VERSION), open: toBool_(s['開放作答']) },
+    settings: {
+      title: str_(s['系統名稱']) || (APP.NAME + ' ' + APP.VERSION),
+      open: toBool_(s['開放作答']),
+      queryOpen: toBool_(s['開放成績查詢'])
+    },
     questions: questions
   };
 }
@@ -575,6 +607,104 @@ function submitAnswer(payload) {
   }
 
   return { ok: true, fileName: fileName, submittedAt: Utilities.formatDate(now, tz, 'yyyy/MM/dd HH:mm:ss') };
+}
+
+/* ================================================================
+ *  🔍 學生查詢成績與詳解
+ * ================================================================ */
+/** 依班級、座號、姓名與單元，找出該生最新一份作答的批改結果 */
+function getMyResult(payload) {
+  const s = getSettings_();
+  if (!toBool_(s['開放成績查詢'])) throw new Error('老師目前尚未開放成績查詢。');
+  if (!payload || typeof payload !== 'object') throw new Error('資料格式錯誤。');
+
+  const cls = normKey_(payload.className);
+  const seat = normKey_(payload.seatNo);
+  const name = normKey_(payload.name);
+  const unit = str_(payload.unit);
+  if (!cls || !seat || !name) throw new Error('請填寫班級、座號與姓名。');
+
+  const sh = getSheet_(SHEETS.SUBMIT);
+  const values = sh.getDataRange().getValues();
+  if (values.length &lt; 2) return { found: false, unit: unit };
+  const idx = indexOfHeaders_(values[0]);
+  const g = function (row, h) { return idx[h] === undefined ? '' : row[idx[h]]; };
+
+  let hit = null, count = 0;
+  for (let r = values.length - 1; r &gt;= 1; r--) {
+    const row = values[r];
+    if (normKey_(g(row, '班級')) !== cls || normKey_(g(row, '座號')) !== seat || normKey_(g(row, '姓名')) !== name) continue;
+    if (unit &amp;&amp; str_(g(row, '單元名稱')) !== unit) continue;
+    count++;
+    if (!hit) hit = row;
+  }
+  if (!hit) return { found: false, unit: unit };
+
+  const tz = Session.getScriptTimeZone();
+  const fmtDate = function (v) {
+    return v instanceof Date ? Utilities.formatDate(v, tz, 'yyyy/MM/dd HH:mm') : str_(v);
+  };
+  const status = str_(g(hit, '批改狀態'));
+  const base = {
+    found: true,
+    unit: str_(g(hit, '單元名稱')) || unit,
+    submittedAt: fmtDate(g(hit, '送出時間')),
+    status: status,
+    submissions: count
+  };
+  if (status !== STATUS.DONE) return Object.assign(base, { done: false });
+
+  const showSolution = toBool_(s['查詢時顯示詳解']);
+  const bank = {};
+  try { readBank_().forEach(function (q) { bank[q.id] = q; }); } catch (e) { /* 題庫讀不到時仍回傳分數 */ }
+
+  const qids = str_(g(hit, '題號清單')).split(/[,，]/).map(function (x) { return x.trim(); }).filter(Boolean);
+  const scoreLines = str_(g(hit, '各題得分')).split('\n');
+  const feedbackText = str_(g(hit, 'AI回饋'));
+  const segments = feedbackText.split(/(?=【第\d+題｜)|(?=【總評】)/);
+  let overall = '';
+  const fbByNo = {};
+  segments.forEach(function (seg) {
+    const m = seg.match(/^【第(\d+)題｜[^】]*】([\s\S]*)$/);
+    if (m) fbByNo[m[1]] = m[2].trim();
+    else if (/^【總評】/.test(seg)) overall = seg.replace(/^【總評】/, '').trim();
+  });
+
+  const per = qids.map(function (id, i) {
+    const q = bank[id] || {};
+    const line = scoreLines.filter(function (l) { return l.indexOf(id + '：') === 0; })[0] || '';
+    const sm = line.slice(id.length + 1).match(/^([\d.]+)\/([\d.]+)(?:（(.*)）)?/);
+    return {
+      no: i + 1,
+      id: id,
+      text: str_(q.text),
+      score: sm ? Number(sm[1]) : null,
+      max: sm ? Number(sm[2]) : (q.score || null),
+      dims: sm &amp;&amp; sm[3] ? sm[3] : '',
+      feedback: fbByNo[String(i + 1)] || '',
+      solution: showSolution ? str_(q.solution) : ''
+    };
+  });
+
+  return Object.assign(base, {
+    done: true,
+    total: Number(g(hit, '總分')) || 0,
+    max: Number(g(hit, '滿分')) || 0,
+    needReview: toBool_(g(hit, '需人工複核')),
+    gradedAt: fmtDate(g(hit, '批改時間')),
+    per: per,
+    overall: overall,
+    feedbackText: feedbackText,
+    showSolution: showSolution
+  });
+}
+
+/** 比對用：去空白、全形轉半形、純數字去掉前導 0（座號 05 與 5 視為相同） */
+function normKey_(v) {
+  let s = str_(v).replace(/^'/, '').replace(/\s+/g, '')
+    .replace(/[！-～]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
+  if (/^\d+$/.test(s)) s = String(Number(s));
+  return s;
 }
 
 /* ================================================================
@@ -1147,7 +1277,7 @@ function setupSheets_() {
   styleHeader_(st, 3);
   st.setColumnWidth(1, 160).setColumnWidth(2, 260).setColumnWidth(3, 420);
   const keys = st.getRange(2, 1, st.getLastRow() - 1, 1).getValues().map(function (r) { return str_(r[0]); });
-  ['開放作答', '送出後自動批改'].forEach(function (k) {
+  ['開放作答', '送出後自動批改', '開放成績查詢', '查詢時顯示詳解'].forEach(function (k) {
     const i = keys.indexOf(k);
     if (i &gt;= 0) st.getRange(i + 2, 2).insertCheckboxes();
   });
@@ -1318,7 +1448,7 @@ function cleanText_(v, max) {
           <!-- 步驟三 -->
           <div>
             <h3 class="text-lg font-bold text-slate-800 mb-2">步驟三：建立前端互動網頁</h3>
-            <p class="text-slate-600 mb-1"><strong class="text-indigo-600">Index.html 的功能：</strong>這是學生看到的作答畫面。學生填好班級、座號、姓名後，可以在畫布上手寫、打字、貼照片註記，畫布不夠用還能往下加長；送出時各題畫布會合成一張圖傳給後端。</p>
+            <p class="text-slate-600 mb-1"><strong class="text-indigo-600">Index.html 的功能：</strong>這是學生看到的作答畫面。學生填好班級、座號、姓名後，可以在畫布上手寫、打字、貼照片註記，畫布不夠用還能往下加長；送出時各題畫布會合成一張圖傳給後端。頁首另有「🔍 查詢成績與詳解」分頁，讓學生查自己的批改結果。</p>
             <p class="text-slate-600 mb-3">在左側點擊 <code class="bg-slate-100 px-1 rounded">+ ➔ HTML</code>，命名為 <strong class="text-pink-600">Index</strong>（大寫 I），清空預設內容並貼上：</p>
 
             <div class="code-block rounded-xl overflow-hidden bg-slate-900 shadow-lg">
@@ -1411,6 +1541,15 @@ function cleanText_(v, max) {
     .text-caret { position: absolute; width: 3px; background: #c0392b; border-radius: 2px; animation: blink 1s steps(1) infinite; pointer-events: none; z-index: 4; }
     @keyframes blink { 50% { opacity: 0; } }
     input[type=range] { accent-color: #2d6a4f; }
+    .view-tab {
+      display: inline-flex; align-items: center; gap: .35rem; padding: .5rem .9rem; border-radius: 10px;
+      font-weight: 700; font-size: .9rem; color: #243b53; border: 1px solid #d9d4ca; background: #fff;
+      transition: background .15s, color .15s, border-color .15s; white-space: nowrap;
+    }
+    .view-tab:hover { border-color: #243b53; }
+    .view-tab.active { background: #243b53; border-color: #243b53; color: #fff; }
+    .score-ring { font-variant-numeric: tabular-nums; }
+    .pre-line { white-space: pre-line; }
     .spinner { width: 18px; height: 18px; border-radius: 999px; border: 3px solid rgba(255, 255, 255, .35); border-top-color: #fff; animation: spin .8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
   &lt;/style&gt;
@@ -1427,9 +1566,47 @@ function cleanText_(v, max) {
       &lt;/div&gt;
       &lt;span id="modeBadge" class="hidden shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300"&gt;🧪 預覽模擬模式&lt;/span&gt;
     &lt;/div&gt;
+    &lt;nav class="max-w-4xl mx-auto px-4 pb-3 flex gap-2" aria-label="功能切換"&gt;
+      &lt;button type="button" id="tabAnswer" class="view-tab active" aria-pressed="true"&gt;📝 開始作答&lt;/button&gt;
+      &lt;button type="button" id="tabQuery" class="view-tab" aria-pressed="false"&gt;🔍 查詢成績與詳解&lt;/button&gt;
+    &lt;/nav&gt;
   &lt;/header&gt;
 
-  &lt;main class="max-w-4xl mx-auto px-4 pt-5 pb-36 space-y-5"&gt;
+  &lt;!-- 🔍 查詢成績與詳解 --&gt;
+  &lt;main id="viewQuery" class="hidden max-w-4xl mx-auto px-4 pt-5 pb-16 space-y-5"&gt;
+    &lt;section class="card p-4 sm:p-5"&gt;
+      &lt;h2 class="font-serif font-bold text-base mb-3 flex items-center gap-2"&gt;
+        &lt;span class="w-6 h-6 rounded-md bg-forest text-white grid place-items-center text-xs"&gt;🔍&lt;/span&gt;查詢我的成績
+      &lt;/h2&gt;
+      &lt;div class="grid grid-cols-2 sm:grid-cols-4 gap-3"&gt;
+        &lt;label class="block text-sm col-span-2 sm:col-span-4"&gt;
+          &lt;span class="text-slatey text-xs"&gt;作答單元&lt;/span&gt;
+          &lt;select id="qUnit" class="field mt-1"&gt;&lt;/select&gt;
+        &lt;/label&gt;
+        &lt;label class="block text-sm"&gt;
+          &lt;span class="text-slatey text-xs"&gt;班級&lt;/span&gt;
+          &lt;input id="qClass" class="field mt-1" placeholder="例：501" maxlength="20" autocomplete="off"&gt;
+        &lt;/label&gt;
+        &lt;label class="block text-sm"&gt;
+          &lt;span class="text-slatey text-xs"&gt;座號&lt;/span&gt;
+          &lt;input id="qSeat" class="field mt-1" placeholder="例：12" maxlength="10" inputmode="numeric" autocomplete="off"&gt;
+        &lt;/label&gt;
+        &lt;label class="block text-sm col-span-2"&gt;
+          &lt;span class="text-slatey text-xs"&gt;姓名&lt;/span&gt;
+          &lt;input id="qName" class="field mt-1" placeholder="請輸入姓名" maxlength="30" autocomplete="off"&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="mt-4 flex flex-wrap items-center justify-between gap-3"&gt;
+        &lt;p class="text-xs text-slatey"&gt;請填寫和送出作業時相同的班級、座號與姓名。&lt;/p&gt;
+        &lt;button type="button" id="btnQuery" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-ink text-white font-bold shadow hover:brightness-110 disabled:opacity-50"&gt;
+          &lt;span id="querySpin" class="spinner hidden"&gt;&lt;/span&gt;&lt;span id="queryLabel"&gt;查詢成績&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;div id="qResult" class="space-y-5"&gt;&lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;main id="viewAnswer" class="max-w-4xl mx-auto px-4 pt-5 pb-36 space-y-5"&gt;
     &lt;!-- 預覽提示 --&gt;
     &lt;div id="previewBanner" class="hidden rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900 leading-relaxed"&gt;
       &lt;b&gt;🧪 預覽模擬模式&lt;/b&gt;：未偵測到 &lt;code class="px-1 rounded bg-amber-100"&gt;google.script.run&lt;/code&gt;，已載入內建三題示範題庫。
@@ -1475,7 +1652,7 @@ function cleanText_(v, max) {
   &lt;/main&gt;
 
   &lt;!-- 送出列 --&gt;
-  &lt;div class="fixed bottom-0 inset-x-0 z-30 border-t border-line bg-paper/95 backdrop-blur"&gt;
+  &lt;div id="submitBar" class="fixed bottom-0 inset-x-0 z-30 border-t border-line bg-paper/95 backdrop-blur"&gt;
     &lt;div class="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3"&gt;
       &lt;div class="flex-1 min-w-0"&gt;
         &lt;p id="progressText" class="text-sm font-medium"&gt;尚未載入題目&lt;/p&gt;
@@ -1568,6 +1745,21 @@ function cleanText_(v, max) {
         text: '小美說：「1/2 + 1/3 = 2/5」。請畫圖說明她為什麼錯了，並寫出正確答案。' },
       { id: 'Q-S301', unit: '植物的構造', grade: '三年級', subject: '自然', score: 10, imageUrl: '',
         text: '請畫出一株植物，標示出根、莖、葉、花，並寫出「根」的兩個功能。' }
+    ]
+  };
+
+  // 預覽模式的查詢示範結果（僅供預覽，非真實成績）
+  var DEMO_RESULT = {
+    found: true, done: true, unit: '分數的加減', submittedAt: '（示範）2026/11/02 09:15', status: '✅已批改', submissions: 1,
+    total: 15, max: 20, needReview: false, gradedAt: '（示範）2026/11/02 09:30', showSolution: true,
+    overall: '這是預覽模式的示範結果。正式環境會顯示 AI 依評分規準給你的回饋。',
+    per: [
+      { no: 1, id: 'Q-M501', text: DEMO_DATA.questions[0].text, score: 10, max: 10, dims: '算式與通分:滿、計算正確:滿、說明:滿',
+        feedback: '（示範）通分過程清楚，答案 5/12 公升正確。',
+        solution: '3/4 − 1/3 = 9/12 − 4/12 = 5/12（公升）。4 和 3 的最小公倍數是 12，所以把兩個分數都通分成分母 12，再把分子相減。' },
+      { no: 2, id: 'Q-M502', text: DEMO_DATA.questions[1].text, score: 5, max: 10, dims: '圖示說明:½、正確答案:½',
+        feedback: '（示範）有指出分母不能直接相加，但圖沒有畫成相同等分，答案也還沒寫出 5/6。',
+        solution: '分母代表把一個整體平分成幾份，不能直接相加。1/2 = 3/6、1/3 = 2/6，所以 1/2 + 1/3 = 5/6。可用切成 6 等分的長條圖或圓形圖說明。' }
     ]
   };
 
@@ -2307,6 +2499,126 @@ function cleanText_(v, max) {
   }
 
   /* ==============================================================
+   *  🔍 查詢成績與詳解
+   * ============================================================== */
+  function switchView(view) {
+    var isQuery = view === 'query';
+    $('#viewAnswer').classList.toggle('hidden', isQuery);
+    $('#submitBar').classList.toggle('hidden', isQuery);
+    $('#viewQuery').classList.toggle('hidden', !isQuery);
+    $('#tabAnswer').classList.toggle('active', !isQuery);
+    $('#tabQuery').classList.toggle('active', isQuery);
+    $('#tabAnswer').setAttribute('aria-pressed', String(!isQuery));
+    $('#tabQuery').setAttribute('aria-pressed', String(isQuery));
+    if (isQuery) {
+      // 沿用作答頁已填的資料
+      if (!$('#qClass').value) $('#qClass').value = $('#inClass').value;
+      if (!$('#qSeat').value) $('#qSeat').value = $('#inSeat').value;
+      if (!$('#qName').value) $('#qName').value = $('#inName').value;
+      if (state.currentUnit) $('#qUnit').value = state.currentUnit;
+    }
+    window.scrollTo({ top: 0 });
+  }
+
+  function setQueryBusy(on) {
+    $('#btnQuery').disabled = on;
+    $('#querySpin').classList.toggle('hidden', !on);
+    $('#queryLabel').textContent = on ? '查詢中…' : '查詢成績';
+  }
+
+  function fmtNum(n) { return n === null || n === undefined || n === '' ? '－' : (Math.round(Number(n) * 100) / 100); }
+
+  function renderQueryResult(res, info) {
+    var box = $('#qResult');
+    if (!res || !res.found) {
+      box.innerHTML = '&lt;div class="card p-6 text-center"&gt;' +
+        '&lt;div class="text-3xl mb-2"&gt;🔎&lt;/div&gt;' +
+        '&lt;p class="font-bold"&gt;找不到你在「' + esc(info.unit) + '」的作答紀錄&lt;/p&gt;' +
+        '&lt;p class="text-sm text-slatey mt-1"&gt;請確認班級、座號、姓名和送出作業時相同；如果還沒送出，請先到「📝 開始作答」完成作業。&lt;/p&gt;&lt;/div&gt;';
+      return;
+    }
+    if (!res.done) {
+      box.innerHTML = '&lt;div class="card p-6"&gt;' +
+        '&lt;div class="flex items-start gap-3"&gt;&lt;div class="text-3xl"&gt;⏳&lt;/div&gt;&lt;div&gt;' +
+        '&lt;p class="font-bold"&gt;作業已收到，老師還在批改中&lt;/p&gt;' +
+        '&lt;p class="text-sm text-slatey mt-1"&gt;單元：' + esc(res.unit) + '｜送出時間：' + esc(res.submittedAt) + '｜目前狀態：' + esc(res.status || '待批改') + '&lt;/p&gt;' +
+        '&lt;p class="text-sm text-slatey mt-1"&gt;批改完成後再回來查詢就能看到分數與回饋。&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';
+      return;
+    }
+
+    var pct = res.max ? Math.round(res.total / res.max * 100) : 0;
+    var html = '&lt;section class="card p-5 sm:p-6"&gt;' +
+      '&lt;div class="flex flex-wrap items-center gap-5"&gt;' +
+        '&lt;div class="score-ring shrink-0 w-28 h-28 rounded-full grid place-items-center text-center" style="background:conic-gradient(#2d6a4f ' + pct + '%, #e4e1da 0)"&gt;' +
+          '&lt;div class="w-[5.6rem] h-[5.6rem] rounded-full bg-card grid place-items-center"&gt;' +
+            '&lt;div&gt;&lt;div class="font-serif text-3xl font-bold leading-none"&gt;' + fmtNum(res.total) + '&lt;/div&gt;' +
+            '&lt;div class="text-xs text-slatey mt-1"&gt;滿分 ' + fmtNum(res.max) + '&lt;/div&gt;&lt;/div&gt;' +
+          '&lt;/div&gt;' +
+        '&lt;/div&gt;' +
+        '&lt;div class="flex-1 min-w-[12rem]"&gt;' +
+          '&lt;p class="font-serif font-bold text-lg"&gt;' + esc(info.className) + ' 班 ' + esc(info.seatNo) + ' 號 ' + esc(info.name) + '&lt;/p&gt;' +
+          '&lt;p class="text-sm text-slatey mt-1"&gt;單元：' + esc(res.unit) + '&lt;/p&gt;' +
+          '&lt;p class="text-sm text-slatey"&gt;送出：' + esc(res.submittedAt) + '｜批改：' + esc(res.gradedAt) + '&lt;/p&gt;' +
+          (res.submissions &gt; 1 ? '&lt;p class="text-xs text-slatey mt-1"&gt;你送出過 ' + res.submissions + ' 次，這裡顯示最新一次的結果。&lt;/p&gt;' : '') +
+          (res.needReview ? '&lt;p class="text-sm mt-2 inline-block px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-300 text-amber-900"&gt;👀 這份作答老師會再人工確認，分數可能會調整。&lt;/p&gt;' : '') +
+        '&lt;/div&gt;' +
+      '&lt;/div&gt;' +
+      (res.overall ? '&lt;div class="mt-4 rounded-xl bg-paper border border-line p-3 text-sm leading-relaxed"&gt;&lt;b&gt;📝 總評：&lt;/b&gt;&lt;span class="pre-line"&gt;' + esc(res.overall) + '&lt;/span&gt;&lt;/div&gt;' : '') +
+    '&lt;/section&gt;';
+
+    var per = res.per || [];
+    if (per.length) {
+      html += per.map(function (p) {
+        return '&lt;section class="card overflow-hidden"&gt;' +
+          '&lt;div class="px-4 sm:px-5 py-3 border-b border-line flex flex-wrap items-center gap-2"&gt;' +
+            '&lt;span class="px-2.5 py-1 rounded-lg bg-ink text-white text-sm font-bold"&gt;第 ' + p.no + ' 題&lt;/span&gt;' +
+            '&lt;span class="px-2.5 py-1 rounded-lg bg-[#e9f1ec] text-forest text-sm font-bold score-ring"&gt;' + fmtNum(p.score) + '／' + fmtNum(p.max) + ' 分&lt;/span&gt;' +
+            '&lt;span class="ml-auto text-xs text-slatey"&gt;' + esc(p.id) + '&lt;/span&gt;' +
+          '&lt;/div&gt;' +
+          '&lt;div class="p-4 sm:p-5 space-y-3 text-sm leading-relaxed"&gt;' +
+            (p.text ? '&lt;p class="font-serif text-base font-bold"&gt;' + esc(p.text) + '&lt;/p&gt;' : '') +
+            (p.dims ? '&lt;p class="text-xs text-slatey"&gt;評量面向：' + esc(p.dims) + '&lt;/p&gt;' : '') +
+            (p.feedback ? '&lt;div class="rounded-xl bg-[#f3f7fb] border border-[#d9e2ec] p-3"&gt;&lt;b&gt;🤖 AI 回饋：&lt;/b&gt;&lt;span class="pre-line"&gt;' + esc(p.feedback) + '&lt;/span&gt;&lt;/div&gt;' : '') +
+            (p.solution ? '&lt;div class="rounded-xl bg-[#eef6f1] border border-[#cfe3d7] p-3"&gt;&lt;b&gt;💡 詳解：&lt;/b&gt;&lt;span class="pre-line"&gt;' + esc(p.solution) + '&lt;/span&gt;&lt;/div&gt;' : '') +
+          '&lt;/div&gt;' +
+        '&lt;/section&gt;';
+      }).join('');
+    } else if (res.feedbackText) {
+      html += '&lt;section class="card p-5 text-sm leading-relaxed"&gt;&lt;b&gt;🤖 AI 回饋&lt;/b&gt;&lt;p class="pre-line mt-2"&gt;' + esc(res.feedbackText) + '&lt;/p&gt;&lt;/section&gt;';
+    }
+    if (!res.showSolution) html += '&lt;p class="text-xs text-slatey text-center"&gt;老師目前沒有開放查看詳解。&lt;/p&gt;';
+    box.innerHTML = html;
+  }
+
+  function handleQuery() {
+    var info = {
+      unit: $('#qUnit').value,
+      className: $('#qClass').value.trim(),
+      seatNo: $('#qSeat').value.trim(),
+      name: $('#qName').value.trim()
+    };
+    if (!info.className || !info.seatNo || !info.name) {
+      toast('請填寫班級、座號與姓名', 'error');
+      (!info.className ? $('#qClass') : !info.seatNo ? $('#qSeat') : $('#qName')).focus();
+      return;
+    }
+    if (state.data &amp;&amp; state.data.settings &amp;&amp; state.data.settings.queryOpen === false) {
+      $('#qResult').innerHTML = '&lt;div class="card p-6 text-center text-slatey"&gt;🔒 老師目前尚未開放成績查詢。&lt;/div&gt;';
+      return;
+    }
+    storageSet('canvas35_student', JSON.stringify({ c: info.className, s: info.seatNo, n: info.name }));
+    setQueryBusy(true);
+    var job = IS_GAS
+      ? callServer('getMyResult', info)
+      : sleep(500).then(function () { return info.unit === DEMO_RESULT.unit ? DEMO_RESULT : { found: false }; });
+    job.then(function (res) {
+      renderQueryResult(res, info);
+    }).catch(function (err) {
+      $('#qResult').innerHTML = '&lt;div class="card p-5 text-rose-800 bg-rose-50 border-rose-200"&gt;⚠️ ' + esc((err &amp;&amp; err.message) || err) + '&lt;/div&gt;';
+    }).then(function () { setQueryBusy(false); });
+  }
+
+  /* ==============================================================
    *  初始化
    * ============================================================== */
   function applyData(data) {
@@ -2322,6 +2634,9 @@ function cleanText_(v, max) {
       var n = data.questions.filter(function (q) { return q.unit === u; }).length;
       return '&lt;option value="' + esc(u) + '"&gt;' + esc(u) + '（' + n + ' 題）&lt;/option&gt;';
     }).join('') || '&lt;option value=""&gt;（目前沒有題目）&lt;/option&gt;';
+    $('#qUnit').innerHTML = units.map(function (u) {
+      return '&lt;option value="' + esc(u) + '"&gt;' + esc(u) + '&lt;/option&gt;';
+    }).join('') || '&lt;option value=""&gt;（目前沒有單元）&lt;/option&gt;';
 
     $('#loading').classList.add('hidden');
     if (units.length) renderUnit(units[0]);
@@ -2345,6 +2660,12 @@ function cleanText_(v, max) {
     });
 
     $('#btnSubmit').addEventListener('click', handleSubmit);
+    $('#tabAnswer').addEventListener('click', function () { switchView('answer'); });
+    $('#tabQuery').addEventListener('click', function () { switchView('query'); });
+    $('#btnQuery').addEventListener('click', handleQuery);
+    ['#qClass', '#qSeat', '#qName'].forEach(function (sel) {
+      $(sel).addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); handleQuery(); } });
+    });
     $('#textOk').addEventListener('click', function () { closeTextModal(true); });
     $('#textCancel').addEventListener('click', function () { closeTextModal(false); });
     $('#textInput').addEventListener('keydown', function (e) {
@@ -2410,7 +2731,7 @@ function cleanText_(v, max) {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
                   <div class="border border-slate-200 bg-slate-50 p-3 rounded-lg">
                     <p class="font-bold text-slate-800 text-sm">⚙️系統設定</p>
-                    <p class="text-xs text-slate-600 mt-1">開放作答、Gemini 模型、信心度門檻、送出後自動批改等開關</p>
+                    <p class="text-xs text-slate-600 mt-1">開放作答、Gemini 模型、信心度門檻、送出後自動批改、開放成績查詢、查詢時顯示詳解等開關</p>
                   </div>
                   <div class="border border-slate-200 bg-slate-50 p-3 rounded-lg">
                     <p class="font-bold text-slate-800 text-sm">⚙️題庫</p>
@@ -2452,7 +2773,9 @@ function cleanText_(v, max) {
               <li><strong>學生作答：</strong>學生開啟網址作答並送出。要收件時，記得在「⚙️系統設定」勾選「開放作答」。</li>
               <li><strong>開始批改：</strong>點「🚀 開始 AI 批改（待批改作答）」。份數多時，系統每跑 3.5 分鐘會自動暫停，約 1 分鐘後自動接續，直到全部改完。</li>
               <li><strong>檢查結果：</strong>點「📊 檢視批改進度」看各狀態份數。信心度低於門檻的作答會標記「需人工複核」，請老師再看一次。</li>
+              <li><strong>學生查成績：</strong>學生在網頁上方點「🔍 查詢成績與詳解」，選單元並輸入班級、座號、姓名即可查詢。若不想讓學生先看到詳解，在「⚙️系統設定」取消勾選「查詢時顯示詳解」；要整個關閉查詢，取消勾選「開放成績查詢」。</li>
             </ol>
+            <p class="text-sm text-slate-600 mt-3">⚠️ 已經部署過舊版的老師：換上新程式碼後，請到「部署」➔「管理部署作業」➔ ✏️ 編輯 ➔ 版本選「新版本」再部署，網址不變；接著執行一次「🧱 初始化／修復工作表結構」，系統設定才會出現兩個新開關。</p>
             <p class="text-sm text-rose-600 mt-3">💡 想讓學生一送出就自動批改，可在「⚙️系統設定」勾選「送出後自動批改」；需要中途喊停時，點「⏹️ 停止自動接續批改」。</p>
           </div>
 
