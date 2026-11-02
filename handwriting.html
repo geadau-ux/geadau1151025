@@ -2397,7 +2397,7 @@ function cleanText_(v, max) {
 </pre>
               </div>
             </div>
-            <p class="text-sm text-slate-500 mt-3">💡 想先看學生端長什麼樣子？可以開啟 <a href="https://script.google.com/a/macros/go.edu.tw/s/AKfycbxKQIxwpEC5DkfQng_lDTvWNJF911kZZDWe9pwNfzPL7VT9v_UB_D6cmZu2PXlpgSBU/exec" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline underline-offset-2 hover:text-indigo-800">✨ 實際部署的示例</a>，或不用登入的 <a href="demo.html" target="_blank" class="text-indigo-600 underline underline-offset-2 hover:text-indigo-800">🧪 學生畫布預覽</a>（預覽模擬模式，內建三題示範題庫）。</p>
+            <p class="text-sm text-slate-500 mt-3">💡 想先看學生端長什麼樣子？可以開啟 <a href="https://script.google.com/a/macros/go.edu.tw/s/AKfycbxKQIxwpEC5DkfQng_lDTvWNJF911kZZDWe9pwNfzPL7VT9v_UB_D6cmZu2PXlpgSBU/exec" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline underline-offset-2 hover:text-indigo-800">✨ 實際部署的示例</a>，或直接在這裡開啟不用登入的 <button type="button" id="open-demo" class="text-indigo-600 underline underline-offset-2 hover:text-indigo-800 font-medium">🧪 學生畫布預覽</button>（預覽模擬模式，內建三題示範題庫）。</p>
           </div>
 
           <!-- 步驟四 -->
@@ -2468,6 +2468,14 @@ function cleanText_(v, max) {
       <span>優履團隊研發 2026 | 使用請引註</span>
     </div>
   </footer>
+</div>
+
+<div id="demo-modal" hidden class="fixed inset-0 z-50 bg-slate-900/85 flex flex-col p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="學生畫布預覽" style="padding-top:calc(12px + env(safe-area-inset-top, 0px));padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px))">
+  <div class="flex items-center justify-between gap-3 mb-3">
+    <span class="text-white font-bold">🧪 學生畫布預覽（預覽模擬模式，作答不會真的送出）</span>
+    <button id="demo-close" type="button" class="shrink-0 bg-white/90 hover:bg-white text-slate-800 font-bold rounded-full w-10 h-10 shadow" aria-label="關閉預覽">✕</button>
+  </div>
+  <iframe id="demo-frame" title="學生畫布預覽" class="flex-1 w-full rounded-xl bg-white border-0"></iframe>
 </div>
 
 <div id="lightbox" hidden class="fixed inset-0 z-50 bg-slate-900/85 flex items-center justify-center p-4 cursor-zoom-out" role="dialog" aria-modal="true" aria-label="放大圖片">
@@ -2572,5 +2580,18 @@ function cleanText_(v, max) {
   });
   lb.addEventListener('click', function (e) { if (e.target !== lbImg) closeLb(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+
+  // 學生畫布預覽：直接用頁面上的 Index.html 程式碼在內嵌視窗執行
+  var dm = document.getElementById('demo-modal');
+  var df = document.getElementById('demo-frame');
+  document.getElementById('open-demo').addEventListener('click', function () {
+    df.srcdoc = document.getElementById('html-code').textContent;
+    dm.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('demo-close').focus();
+  });
+  function closeDemo() { dm.hidden = true; df.removeAttribute('srcdoc'); df.src = 'about:blank'; document.body.style.overflow = ''; }
+  document.getElementById('demo-close').addEventListener('click', closeDemo);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dm.hidden) closeDemo(); });
 })();
 </script>
