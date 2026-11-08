@@ -594,7 +594,7 @@
                     {[
                         { id: 'overview', label: '工作坊總覽', icon: <IconTarget size={18} /> },
                         { id: 'day1-ai', label: '人機共創評量規準', icon: <IconBot size={18} className="text-indigo-500" /> },
-                        { id: 'peer-review', label: '同儕互評部署雲端實作', icon: <IconLaptop size={18} className="text-purple-500" /> },
+                        { id: 'peer-review', label: '同儕互評部署', icon: <IconLaptop size={18} className="text-purple-500" /> },
                         { id: 'secure-gas', label: '資安版雲端部署', icon: <IconShield size={18} className="text-blue-600" /> },
                         { id: 'deploy-guide', label: '部署指南', icon: <IconRocket size={18} className="text-orange-500" /> }
                     ].map((tab) => (
@@ -1011,7 +1011,7 @@
                     )}
 
                     {/* ======================================================================= */}
-                    {/* TAB: 同儕互評部署雲端實作 */}
+                    {/* TAB: 同儕互評部署 */}
                     {/* ======================================================================= */}
                     {activeTab === 'peer-review' && (
                     <div className="animate-fade-in bg-white flex flex-col rounded-2xl shadow-lg border border-slate-200 overflow-hidden" style={{ height: '800px' }}>
@@ -1022,7 +1022,7 @@
                             <div className="border-b-2 border-purple-200 pb-2 mb-4">
                             <h2 className="text-2xl font-extrabold text-purple-900 flex items-center">
                                 <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">5</span>
-                                🔴 同儕互評部署雲端實作
+                                🔴 同儕互評部署實作
                             </h2>
                             </div>
 
@@ -1140,7 +1140,7 @@
                                 <li className="bg-indigo-50 rounded-lg px-3 py-2"><span className="font-bold text-indigo-800">② 輸入身份碼</span><br/><span className="text-slate-600">模擬資料皆為 <code className="bg-white px-1 rounded font-bold">1111</code></span></li>
                                 <li className="bg-indigo-50 rounded-lg px-3 py-2"><span className="font-bold text-indigo-800">③ 選組別並評分</span><br/><span className="text-slate-600">送出後看即時看板更新</span></li>
                             </ol>
-                            <p className="text-xs text-slate-500 mt-3">同一組再評一次，可以體驗「⚠️修改分數」的提醒；在「我的評分紀錄」也能修改或撤回。</p>
+                            <p className="text-xs text-slate-500 mt-3">送出的分數會寫進示例試算表，可在下方「📊 後台示例」看到評分總表的變化。同一組再評一次，可以體驗「⚠️修改分數」的提醒；在「我的評分紀錄」也能修改或撤回。</p>
                             </div>
 
                             {/* Block 5: GAS 部署 Prompt */}
@@ -1178,7 +1178,15 @@
 
                             {/* 模擬程式碼檔：📁 code.gs 與 🧑‍💻 Index */}
                             <div className="space-y-3">
-                            <p className="text-sm font-bold text-slate-600">AI 依上方 Prompt 產出的程式碼範例（圓規畫圓同儕評分系統）：</p>
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                                <p className="text-sm font-bold text-slate-600">AI 依上方 Prompt 產出的程式碼範例（圓規畫圓同儕評分系統）：</p>
+                                <a href="https://docs.google.com/spreadsheets/d/1gMOk_HuGG1mwbTkQzg_PEQfC3pYBTYSntWJlqpTUppo/edit?usp=sharing" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 text-sm font-bold transition-colors">
+                                <span aria-hidden="true">📊</span>後台示例（Google 試算表）
+                                <IconExternalLink className="w-3.5 h-3.5 opacity-60" />
+                                </a>
+                            </div>
+                            <p className="text-xs text-slate-500 -mt-1">學生在前台送出的分數，會即時寫進這份試算表的「評分總表」與「評分紀錄」分頁。</p>
                             <SampleFile id="sample-code-gs" icon="📁" name="code.gs" target="貼在 Apps Script 的『code.gs』" desc="後端程式碼" code={DEPLOY_ASSETS.sampleCodeGs} highlight="const SPREADSHEET_ID" note="🔧 使用前請改第 22 行：把 SPREADSHEET_ID 引號裡的「請貼上您的試算表 ID」換成您自己的試算表 ID（網址中 /d/ 與 /edit 之間那一串），改完要重新部署。" copied={copiedStates['sample-code-gs']} onCopy={handleCopy} />
                             <SampleFile id="sample-index" icon="🧑‍💻" name="Index.html" target="新增 HTML 檔，命名為『Index』（I 大寫）" desc="前台網頁" code={DEPLOY_ASSETS.sampleIndex} copied={copiedStates['sample-index']} onCopy={handleCopy} />
                             </div>
